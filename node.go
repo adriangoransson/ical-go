@@ -3,6 +3,7 @@ package ical
 import (
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -48,6 +49,7 @@ func (this *Node) PropDate(name string, defaultValue time.Time) time.Time {
 		return defaultValue
 	}
 	tzid := node.Parameter("TZID", "")
+	tzid = strings.Trim(tzid, "\"'")
 	allDay := node.Parameter("VALUE", "") == "DATE"
 	var output time.Time
 	var err error
@@ -66,6 +68,7 @@ func (this *Node) PropDate(name string, defaultValue time.Time) time.Time {
 	if err != nil {
 		panic(err)
 	}
+
 	return output
 }
 
